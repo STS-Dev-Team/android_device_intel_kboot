@@ -1,0 +1,79 @@
+#!/bin/sh
+#
+# kboot - Kboot initialization and command-line interface
+#
+# Written 2005, 2006 by Werner Almesberger
+#
+
+# Print KBoot Version
+echo "*************************************************************************"
+echo "   Android Kboot. version: KBOOT_VERSION_PLACEHOLDER"
+echo "*************************************************************************"
+
+if [ "x$0" = x/init ]; then
+    __sysinit=true
+else
+    __sysinit=false
+fi
+
+###############################################################################
+#
+# System setup and internal initialization
+#
+
+if $__sysinit; then
+    if [ ! -e /proc/mounts ] ; then
+	mount -t proc proc /proc
+	mount -t tmpfs -o size=16m tmpfs /tmp
+	mount -t tmpfs -o size=16m tmpfs /var
+	mkdir -p -m a+rwx /var/log /var/run /var/lock
+	mount -t sysfs sysfs /sys
+	mount -t tmpfs mdev /dev
+	mkdir /dev/pts
+	mount -t devpts devpts /dev/pts
+	echo /sbin/hotplug > /proc/sys/kernel/hotplug
+	ln -s /tmp/messages /var/log/messages
+	/sbin/syslogd -O /tmp/messages
+
+	# needed for mkfs.ext3 to work in kboot environment
+	ln -s /proc/mounts /etc/mtab
+	mdev -s
+	mkdir -p /data/logs
+	mount -t ext4 /dev/mmcblk0p10 /data/logs
+	if [ $? -eq 0 ]
+	then
+		/sbin/syslogd -O /data/logs/aplog -s 5000 -b 5
+		/sbin/klogd
+	fi
+    fi
+
+    # aboot allocates a very large buffer... but probably doesn't use it all.
+    # We'll play it quite close to the edge and allow all memory overcommits until
+    # the kernel actually runs out. 
+    # Unfortunately, Should it do so... it will be quite messy.
+    sysctl -w vm.overcommit_memory=1 > /dev/null 2>&1
+
+    # Create the device number for the IPC driver
+    if [ -x /sbin/ipc_proxy_dev_create.sh ]; then
+        /sbin/ipc_proxy_dev_create.sh
+    fi
+fi
+
+__verbose=true
+__FSTAB=/etc/fstab
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+#Start watchdog daemon
+/sbin/watchdogd &
+
+PS1='KBoot> '	# if user invokes a shell
+export PATH PS1
+
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+
+# Call AutoBoot Script to provide fastboot access over the OTG.
+/sbin/AutoBoot.sh
+
+# Switch to 'ash' Shell
+/bin/ash

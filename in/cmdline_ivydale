@@ -1,0 +1,1 @@
+ro boot=nand pci=noearly console=tty0 console=ttyS0 quiet loglevel=4 android.fastboot_for_adb=1 platformid=cdk

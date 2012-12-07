@@ -1,0 +1,1 @@
+ro itp no-hlt pci=noearly console=tty1 console=ttyMFD3,115200 earlyprintk=mrst idle=poll loglevel=4 f_adb.fastboot=1 ip=50.0.0.2:50.0.0.1::255.255.255.0::usb0:on

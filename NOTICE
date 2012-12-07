@@ -1,0 +1,26 @@
+KBoot is based on Linux kernel, busybox and some filesystem utilities:
+
+Busybox-1.18.5
+  http://busybox.net/downloads/busybox-1.18.5.tar.bz2
+  GNU General Public License, version 2(http://www.gnu.org/licenses/gpl-2.0.html)
+
+Ext2 Filesystems Utilities
+  http://sourceforge.net/projects/e2fsprogs/develop
+  GNU General Public License, version 2(http://www.gnu.org/licenses/gpl-2.0.html)
+
+========================================================================
+Copyright(c) 2011 Intel Corporation. All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+

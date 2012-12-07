@@ -1,0 +1,19 @@
+KBoot README
+-----------
+
+    KBoot is a proof-of-concept implementation of a Linux boot loader based on kexec.
+
+    For Android, this is a legacy from Moblin/MeeGo. And it will be removed once Recovery OS is ready.
+
+Build Requirements and Licenses
+------------
+
+    KBoot is based on Linux kernel, busybox and some filesystem utilities:
+
+    Busybox-1.18.5
+      http://busybox.net/downloads/busybox-1.18.5.tar.bz2
+      GNU General Public License, version 2(http://www.gnu.org/licenses/gpl-2.0.html)
+
+    Ext2 Filesystems Utilities
+      http://sourceforge.net/projects/e2fsprogs/develop
+      GNU General Public License, version 2(http://www.gnu.org/licenses/gpl-2.0.html)

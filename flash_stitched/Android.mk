@@ -1,0 +1,26 @@
+LOCAL_PATH:= $(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES:= \
+	update_osip.c
+
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE:= update_osip
+
+LOCAL_FORCE_STATIC_EXECUTABLE := true
+LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT_SBIN)
+LOCAL_UNSTRIPPED_PATH := $(TARGET_ROOT_OUT_UNSTRIPPED)
+
+LOCAL_STATIC_LIBRARIES := libc libosip
+
+include $(BUILD_EXECUTABLE)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_TAGS := eng
+
+LOCAL_SRC_FILES := manage_device.c osip_utils.c
+
+LOCAL_MODULE := libosip
+
+include $(BUILD_STATIC_LIBRARY)
+
